@@ -26,33 +26,26 @@ unsigned int io_seproxyhal_touch_tx_ok(__attribute__((unused)) const bagl_elemen
                   sizeof(signature),
                   &info);
     explicit_bzero(&privateKey, sizeof(privateKey));
-    if (txContext.txType == EIP1559 || txContext.txType == EIP2930) {
-        if (info & CX_ECCINFO_PARITY_ODD) {
-            G_io_apdu_buffer[0] = 1;
-        } else {
-            G_io_apdu_buffer[0] = 0;
-        }
+    
+    // Parity is present in the sequence tag in the legacy API
+    if (tmpContent.txContent.vLength == 0) {
+        // Legacy API
+        G_io_apdu_buffer[0] = 27;
     } else {
-        // Parity is present in the sequence tag in the legacy API
-        if (tmpContent.txContent.vLength == 0) {
-            // Legacy API
-            G_io_apdu_buffer[0] = 27;
-        } else {
-            // New API
-            // Note that this is wrong for a large v, but ledgerjs will recover.
+        // New API
+        // Note that this is wrong for a large v, but ledgerjs will recover.
 
-            // Taking only the 4 highest bytes to not introduce breaking changes. In the future,
-            // this should be updated.
-            uint32_t v = (uint32_t) u64_from_BE(tmpContent.txContent.v,
-                                                MIN(4, tmpContent.txContent.vLength));
-            G_io_apdu_buffer[0] = (v * 2) + 35;
-        }
-        if (info & CX_ECCINFO_PARITY_ODD) {
-            G_io_apdu_buffer[0]++;
-        }
-        if (info & CX_ECCINFO_xGTn) {
-            G_io_apdu_buffer[0] += 2;
-        }
+        // Taking only the 4 highest bytes to not introduce breaking changes. In the future,
+        // this should be updated.
+        uint32_t v = (uint32_t) u64_from_BE(tmpContent.txContent.v,
+                                            MIN(4, tmpContent.txContent.vLength));
+        G_io_apdu_buffer[0] = (v * 2) + 35;
+    }
+    if (info & CX_ECCINFO_PARITY_ODD) {
+        G_io_apdu_buffer[0]++;
+    }
+    if (info & CX_ECCINFO_xGTn) {
+        G_io_apdu_buffer[0] += 2;
     }
     format_signature_out(signature);
     tx = 65;

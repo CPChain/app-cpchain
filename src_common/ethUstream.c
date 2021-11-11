@@ -308,105 +308,6 @@ static void processV(txContext_t *context) {
     }
 }
 
-static bool processEIP1559Tx(txContext_t *context) {
-    switch (context->currentField) {
-        case EIP1559_RLP_CONTENT: {
-            processContent(context);
-            if ((context->processingFlags & TX_FLAG_TYPE) == 0) {
-                context->currentField++;
-            }
-            break;
-        }
-        // This gets hit only by Wanchain
-        case EIP1559_RLP_TYPE: {
-            processType(context);
-            break;
-        }
-        case EIP1559_RLP_CHAINID: {
-            processChainID(context);
-            break;
-        }
-        case EIP1559_RLP_NONCE: {
-            processNonce(context);
-            break;
-        }
-        case EIP1559_RLP_MAX_FEE_PER_GAS: {
-            processGasprice(context);
-            break;
-        }
-        case EIP1559_RLP_GASLIMIT: {
-            processGasLimit(context);
-            break;
-        }
-        case EIP1559_RLP_TO: {
-            processTo(context);
-            break;
-        }
-        case EIP1559_RLP_VALUE: {
-            processValue(context);
-            break;
-        }
-        case EIP1559_RLP_DATA: {
-            processData(context);
-            break;
-        }
-        case EIP1559_RLP_ACCESS_LIST: {
-            processAccessList(context);
-            break;
-        }
-        case EIP1559_RLP_MAX_PRIORITY_FEE_PER_GAS:
-            processAndDiscard(context);
-            break;
-        default:
-            PRINTF("Invalid RLP decoder context\n");
-            return true;
-    }
-    return false;
-}
-
-static bool processEIP2930Tx(txContext_t *context) {
-    switch (context->currentField) {
-        case EIP2930_RLP_CONTENT:
-            processContent(context);
-            if ((context->processingFlags & TX_FLAG_TYPE) == 0) {
-                context->currentField++;
-            }
-            break;
-        // This gets hit only by Wanchain
-        case EIP2930_RLP_TYPE:
-            processType(context);
-            break;
-        case EIP2930_RLP_CHAINID:
-            processChainID(context);
-            break;
-        case EIP2930_RLP_NONCE:
-            processNonce(context);
-            break;
-        case EIP2930_RLP_GASPRICE:
-            processGasprice(context);
-            break;
-        case EIP2930_RLP_GASLIMIT:
-            processGasLimit(context);
-            break;
-        case EIP2930_RLP_TO:
-            processTo(context);
-            break;
-        case EIP2930_RLP_VALUE:
-            processValue(context);
-            break;
-        case EIP2930_RLP_DATA:
-            processData(context);
-            break;
-        case EIP2930_RLP_ACCESS_LIST:
-            processAccessList(context);
-            break;
-        default:
-            PRINTF("Invalid RLP decoder context\n");
-            return true;
-    }
-    return false;
-}
-
 static bool processLegacyTx(txContext_t *context) {
     switch (context->currentField) {
         case LEGACY_RLP_CONTENT:
@@ -551,20 +452,6 @@ static parserStatus_e processTxInternal(txContext_t *context) {
                 bool fault;
                 case LEGACY:
                     fault = processLegacyTx(context);
-                    if (fault) {
-                        return USTREAM_FAULT;
-                    } else {
-                        break;
-                    }
-                case EIP2930:
-                    fault = processEIP2930Tx(context);
-                    if (fault) {
-                        return USTREAM_FAULT;
-                    } else {
-                        break;
-                    }
-                case EIP1559:
-                    fault = processEIP1559Tx(context);
                     if (fault) {
                         return USTREAM_FAULT;
                     } else {

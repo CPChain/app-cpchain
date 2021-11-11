@@ -34,11 +34,6 @@ uint64_t get_chain_id(void) {
         case LEGACY:
             chain_id = u64_from_BE(txContext.content->v, txContext.content->vLength);
             break;
-        case EIP2930:
-        case EIP1559:
-            chain_id = u64_from_BE(tmpContent.txContent.chainID.value,
-                                   tmpContent.txContent.chainID.length);
-            break;
         default:
             PRINTF("Txtype `%d` not supported while generating chainID\n", txContext.txType);
             break;

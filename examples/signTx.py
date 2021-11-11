@@ -69,17 +69,17 @@ parser.add_argument('--descriptor', help="Optional descriptor")
 args = parser.parse_args()
 
 if args.path == None:
-    # if you want to use the next account ->  "44'/60'/1'/0/0"
-    args.path = "44'/60'/0'/0/0"
+    # if you want to use the next account ->  "44'/337'/1'/0/0"
+    args.path = "44'/337'/0'/0/0"
 
 if args.data == None:
     args.data = b""
 else:
     args.data = decode_hex(args.data[2:])
 
-# default to Ethereum mainnet
+# default to CPChain mainnet
 if args.chainid == None:
-    args.chainid = 1
+    args.chainid = 337
 
 amount = Decimal(args.amount) * 10**18
 

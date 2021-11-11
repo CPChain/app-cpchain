@@ -40,8 +40,8 @@ endif
 
 ifeq ($(CHAIN),ethereum)
 # Lock the application on its standard path for 1.5. Please complain if non compliant
-APP_LOAD_PARAMS += --path "44'/60'"
-DEFINES += CHAINID_UPCASE=\"ETHEREUM\" CHAINID_COINNAME=\"ETH\" CHAIN_KIND=CHAIN_KIND_ETHEREUM CHAIN_ID=1
+APP_LOAD_PARAMS += --path "44'/337'"
+DEFINES += CHAINID_UPCASE=\"CPCHAIN\" CHAINID_COINNAME=\"CPC\" CHAIN_KIND=CHAIN_KIND_CPCHAIN CHAIN_ID=337
 # Starkware integration
 APP_LOAD_PARAMS += --path "2645'/579218131'"
 DEFINES += HAVE_STARKWARE
@@ -49,7 +49,7 @@ DEFINES += STARK_BIP32_PATH_0=0x80000A55 STARK_BIP32_PATH_1=0xA2862AD3
 # Allow to derive ETH 2 public keys
 APP_LOAD_PARAMS += --path "12381/3600" --curve bls12381g1
 DEFINES += HAVE_ETH2
-APPNAME = "Ethereum"
+APPNAME = "CPChain"
 DEFINES_LIB=
 APP_LOAD_FLAGS=--appFlags 0xa40
 else ifeq ($(CHAIN),ropsten)
@@ -234,9 +234,13 @@ else ifeq ($(CHAIN),polygon)
 APP_LOAD_PARAMS += --path "44'/60'"
 DEFINES += CHAINID_UPCASE=\"POLYGON\" CHAINID_COINNAME=\"MATIC\" CHAIN_KIND=CHAIN_KIND_POLYGON CHAIN_ID=137
 APPNAME = "Polygon"
+else ifeq ($(CHAIN),cpchain)
+APP_LOAD_PARAMS += --path "44'/337'"
+DEFINES += CHAINID_UPCASE=\"CPCHAIN\" CHAINID_COINNAME=\"CPC\" CHAIN_KIND=CHAIN_KIND_CPCHAIN CHAIN_ID=337
+APPNAME = "CPChain"
 else
 ifeq ($(filter clean,$(MAKECMDGOALS)),)
-$(error Unsupported CHAIN - use ethereum, ropsten, goerli, moonriver, ethereum_classic, expanse, poa, artis_sigma1, artis_tau1, rsk, rsk_testnet, ubiq, wanchain, kusd, musicoin, pirl, akroma, atheios, callisto, ethersocial, ellaism, ether1, ethergem, gochain, mix, reosc, hpb, tomochain, tobalaba, dexon, volta, ewc, webchain, thundercore, bsc, songbird, polygon)
+$(error Unsupported CHAIN - use ethereum, ropsten, goerli, moonriver, ethereum_classic, expanse, poa, artis_sigma1, artis_tau1, rsk, rsk_testnet, ubiq, wanchain, kusd, musicoin, pirl, akroma, atheios, callisto, ethersocial, ellaism, ether1, ethergem, gochain, mix, reosc, hpb, tomochain, tobalaba, dexon, volta, ewc, webchain, thundercore, bsc, songbird, polygon, cpchain)
 endif
 endif
 

@@ -79,7 +79,7 @@ else:
 
 # default to CPChain mainnet
 if args.chainid == None:
-    args.chainid = 337
+    args.chainid = CHAIN_ID
 
 amount = Decimal(args.amount) * 10**18
 
@@ -91,7 +91,7 @@ tx = UnsignedTransaction(
     to=decode_hex(args.to[2:]),
     value=int(amount),
     data=args.data,
-    chainid=337,
+    chainid=CHAIN_ID,
     dummy1=0,
     dummy2=0
 )
@@ -131,5 +131,5 @@ tx = Transaction(0, tx.nonce, tx.gasprice, tx.startgas,
 print("Signed transaction", encode_hex(encode(tx)))
 
 """
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_sendRawTransaction","params":["0xf87180018601a3185c5000830493e0941455d180e3ade94ebd9cc324d22a9065d1f5f575880de0b6b3a7640000808202c6a0b3eda73d025a3c7a59a801a0794adbb36f9762cc26cb09103399cb86ae9545afa05781736b67b76dc6eea71718708117d7cdafaf6276db50cb01fdb4e9570d2e00"],"id":1}' --url 'https://civilian.cpchain.io' -H "Content-Type: application/json"
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_sendRawTransaction","params":["0xf87180808601a3185c5000830493e0941455d180e3ade94ebd9cc324d22a9065d1f5f575880de0b6b3a7640000808202c6a00757621af0367262d485359744cce305d62aeb876c7abac400415319c970afa0a04c4b4cf7ce0e470c900d292e59e5dd6dfeb74b9c6126b93bb987bbfd48955705"],"id":1}' --url 'https://civilian.cpchain.io' -H "Content-Type: application/json"
 """

@@ -4,10 +4,10 @@ import { waitForAppScreen, zemu } from './test.fixture';
 
 test('[Nano S] Transfer on network 337 on CPChain', zemu("nanos", async (sim, eth) => {
 
-  // const tx = eth.signTransaction(
-  //   "44'/60'/337'/0/0",
-  //   'f044850306dc4200825208945a321744667052affa8386ed49e00ef223cbffc3876f9c9e7bf6181880851a21a278be8080',
-  // );
+  const tx = eth.signTransaction(
+     "44'/337'/0'/0/0",
+	 "f180808601a3185c5000830493e0941455d180e3ade94ebd9cc324d22a9065d1f5f575880de0b6b3a7640000808201518080"
+  );
 
   // await waitForAppScreen(sim);
   // await sim.navigateAndCompareSnapshots('.', 'nanos_transfer_112233445566_network', [9, 0]);

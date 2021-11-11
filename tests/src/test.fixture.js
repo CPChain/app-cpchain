@@ -48,11 +48,8 @@ function zemu(device, func) {
         }
         const sim = new Zemu(...zemu_args);
         try {
-            console.log('----->>>>>>0')
             await sim.start(sim_options);
-            console.log('----->>>>>>1')
             const transport = await sim.getTransport();
-            console.log('----->>>>>>2')
             await func(sim, new Eth(transport));
         } finally {
             await sim.close();

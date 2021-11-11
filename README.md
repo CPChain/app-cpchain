@@ -1,16 +1,14 @@
-# app-ethereum
-Ethereum wallet application framework for Nano S and Nano X.
+# app-cpchain
+
+CPChain wallet application framework for Nano S and Nano X.
+
 Ledger Blue is not maintained anymore, but the app can still be compiled for this target using the branch `blue-final-release`.
 
 This app follows the specification available in the `doc/` folder.
 
-To compile it and load it on a device, please check out our [developer portal](https://developers.ledger.com/docs/NA/start_here/).
+To compile it and load it on a device, please check out [developer portal](https://developers.ledger.com/docs/NA/start_here/).
 
-# Plugins
-
-This app support external plugins. More info in [doc/ethapp_plugin.asc](https://github.com/LedgerHQ/app-ethereum/blob/master/doc/ethapp_plugins.asc). If you wish to have a look at an existing plugin, feel free to check out the [Boilerplate plugin](https://github.com/LedgerHQ/app-plugin-boilerplate).
-
-# Testing
+## Testing
 
 Testing is done via the open-source framework [zemu](https://github.com/Zondax/zemu).
 
@@ -19,25 +17,29 @@ Testing is done via the open-source framework [zemu](https://github.com/Zondax/z
 First [install yarn](https://classic.yarnpkg.com/en/docs/install/#debian-stable).
 Open `tests/build_local_test_elfs.sh` and add your BOLOS SDKs path to `NANOS_SDK` and `NANOX_SDK`.
 This helper script will build the applications required by the test suite and move them at the right place.
-```
+
+```bash
 cd test
 ./build_local_test_elfs.sh
 ```
+
 Then you can install the project by simply running:
-```
+
+```bash
 cd ..
 make test
 ```
+
 This will run `make install_tests` and `make run_tests`
 
 To run a specific tests (here the send test):
-```
+
+```bash
 cd tests
 jest --runInBand --detectOpenHandles src/send.test.js
 ```
 
 Make sure you're in the `tests` folder before running `jest` or `yarn test`.
-
 
 ## Adding tests
 
@@ -57,12 +59,14 @@ Finally make sure you adapt the expected signature!
 ### Update binaries
 
 Don't forget to update the binaries in the test folder. To do so, compile with those environement variables:
-```
+
+```bash
 make DEBUG=1 ALLOW_DATA=1
 ```
 
 Then copy the binary to the `tests/elfs` folder (in this case, compiled with SDK for nanoS):
-```
+
+```bash
 cp bin/app.elf tests/elfs/ethereum_nanos.elf
 ```
 

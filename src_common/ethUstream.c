@@ -122,22 +122,21 @@ static void processType(txContext_t *context) {
     }
 }
 
-static void processChainID(txContext_t *context) {
+static void processTxType(txContext_t *context) {
     if (context->currentFieldIsList) {
-        PRINTF("Invalid type for RLP_CHAINID\n");
+        PRINTF("Invalid type for RLP_TYPE\n");
         THROW(EXCEPTION);
     }
     if (context->currentFieldLength > MAX_INT256) {
-        PRINTF("Invalid length for RLP_CHAINID\n");
+        PRINTF("Invalid length for RLP_TYPE\n");
         THROW(EXCEPTION);
     }
     if (context->currentFieldPos < context->currentFieldLength) {
         uint32_t copySize =
             MIN(context->commandLength, context->currentFieldLength - context->currentFieldPos);
-        copyTxData(context, context->content->chainID.value, copySize);
+        copyTxData(context, NULL, copySize);
     }
     if (context->currentFieldPos == context->currentFieldLength) {
-        context->content->chainID.length = context->currentFieldLength;
         context->currentField++;
         context->processingField = false;
     }
@@ -319,6 +318,9 @@ static bool processLegacyTx(txContext_t *context) {
         // This gets hit only by Wanchain
         case LEGACY_RLP_TYPE:
             processType(context);
+            break;
+        case LEGACY_RLP_TXTYPE:
+            processTxType(context);
             break;
         case LEGACY_RLP_NONCE:
             processNonce(context);

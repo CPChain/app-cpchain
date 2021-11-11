@@ -29,7 +29,7 @@ from ethBase import Transaction, UnsignedTransaction, unsigned_tx_from_tx
 from rlp import encode
 
 # Define here Chain_ID for EIP-155
-CHAIN_ID = 0
+CHAIN_ID = 337
 
 try:
     from rlp.utils import decode_hex, encode_hex, str_to_bytes
@@ -84,23 +84,20 @@ if args.chainid == None:
 amount = Decimal(args.amount) * 10**18
 
 tx = UnsignedTransaction(
+    type=0,
     nonce=int(args.nonce),
     gasprice=int(args.gasprice),
     startgas=int(args.startgas),
     to=decode_hex(args.to[2:]),
     value=int(amount),
     data=args.data,
-    chainid=args.chainid,
+    chainid=337,
     dummy1=0,
     dummy2=0
 )
 
 encodedTx = encode(tx, UnsignedTransaction)
-# encodedTx = bytearray.fromhex(
-# "02ef0306843b9aca008504a817c80082520894b2bb2b958afa2e96dab3f3ce7162b87daea39017872386f26fc1000080c0")
-
-# To test an EIP-2930 transaction, uncomment this line
-#encodedTx = bytearray.fromhex("01f8e60380018402625a0094cccccccccccccccccccccccccccccccccccccccc830186a0a4693c61390000000000000000000000000000000000000000000000000000000000000002f85bf859940000000000000000000000000000000000000102f842a00000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000060a780a09b8adcd2a4abd34b42d56fcd90b949f74ca9696dfe2b427bc39aa280bbf1924ca029af4a471bb2953b4e7933ea95880648552a9345424a1ac760189655ceb1832a")
+print(encodedTx.hex())
 
 dongle = getDongle(True)
 
@@ -119,16 +116,20 @@ apdu += donglePath + encodedTx
 result = dongle.exchange(bytes(apdu))
 
 # Needs to recover (main.c:1121)
-# if (CHAIN_ID*2 + 35) + 1 > 255:
-#     ecc_parity = result[0] - ((CHAIN_ID*2 + 35) % 256)
-#     v = (CHAIN_ID*2 + 35) + ecc_parity
-# else:
-#     v = result[0]
+if (CHAIN_ID*2 + 35) + 1 > 255:
+    ecc_parity = result[0] - ((CHAIN_ID*2 + 35) % 256)
+    v = (CHAIN_ID*2 + 35) + ecc_parity
+else:
+    v = result[0]
 
-# r = int(binascii.hexlify(result[1:1 + 32]), 16)
-# s = int(binascii.hexlify(result[1 + 32: 1 + 32 + 32]), 16)
+r = int(binascii.hexlify(result[1:1 + 32]), 16)
+s = int(binascii.hexlify(result[1 + 32: 1 + 32 + 32]), 16)
 
-# tx = Transaction(tx.nonce, tx.gasprice, tx.startgas,
-#                  tx.to, tx.value, tx.data, v, r, s)
+tx = Transaction(0, tx.nonce, tx.gasprice, tx.startgas,
+                 tx.to, tx.value, tx.data, v, r, s)
 
 print("Signed transaction", encode_hex(encode(tx)))
+
+"""
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_sendRawTransaction","params":["0xf87180018601a3185c5000830493e0941455d180e3ade94ebd9cc324d22a9065d1f5f575880de0b6b3a7640000808202c6a0b3eda73d025a3c7a59a801a0794adbb36f9762cc26cb09103399cb86ae9545afa05781736b67b76dc6eea71718708117d7cdafaf6276db50cb01fdb4e9570d2e00"],"id":1}' --url 'https://civilian.cpchain.io' -H "Content-Type: application/json"
+"""

@@ -48,6 +48,7 @@ typedef enum rlpLegacyTxField_e {
     LEGACY_RLP_NONE = RLP_NONE,
     LEGACY_RLP_CONTENT,
     LEGACY_RLP_TYPE,  // For wanchain
+    LEGACY_RLP_TXTYPE,
     LEGACY_RLP_NONCE,
     LEGACY_RLP_GASPRICE,
     LEGACY_RLP_STARTGAS,

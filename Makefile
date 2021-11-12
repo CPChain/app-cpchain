@@ -28,37 +28,27 @@ APP_LOAD_PARAMS += --path "45'"
 # Samsung temporary implementation for wallet ID on 0xda7aba5e/0xc1a551c5
 APP_LOAD_PARAMS += --path "1517992542'/1101353413'"
 
-APPVERSION_M=1
-APPVERSION_N=9
-APPVERSION_P=11
+APPVERSION_M=0
+APPVERSION_N=5
+APPVERSION_P=2
 APPVERSION=$(APPVERSION_M).$(APPVERSION_N).$(APPVERSION_P)
 APP_LOAD_FLAGS= --appFlags 0x240 --dep Ethereum:$(APPVERSION)
 
 ifeq ($(CHAIN),)
-CHAIN=ethereum
+CHAIN=cpchain
 endif
 
-ifeq ($(CHAIN),ethereum)
+ifeq ($(CHAIN),cpchain)
 # Lock the application on its standard path for 1.5. Please complain if non compliant
 APP_LOAD_PARAMS += --path "44'/337'"
 DEFINES += CHAINID_UPCASE=\"CPCHAIN\" CHAINID_COINNAME=\"CPC\" CHAIN_KIND=CHAIN_KIND_CPCHAIN CHAIN_ID=337
-# Starkware integration
-APP_LOAD_PARAMS += --path "2645'/579218131'"
-DEFINES += HAVE_STARKWARE
-DEFINES += STARK_BIP32_PATH_0=0x80000A55 STARK_BIP32_PATH_1=0xA2862AD3
-# Allow to derive ETH 2 public keys
-APP_LOAD_PARAMS += --path "12381/3600" --curve bls12381g1
-DEFINES += HAVE_ETH2
+APP_LOAD_PARAMS += --path "44'/41'"
 APPNAME = "CPChain"
 DEFINES_LIB=
 APP_LOAD_FLAGS=--appFlags 0xa40
-else ifeq ($(CHAIN),cpchain)
-APP_LOAD_PARAMS += --path "44'/337'"
-DEFINES += CHAINID_UPCASE=\"CPCHAIN\" CHAINID_COINNAME=\"CPC\" CHAIN_KIND=CHAIN_KIND_CPCHAIN CHAIN_ID=337
-APPNAME = "CPChain"
 else
 ifeq ($(filter clean,$(MAKECMDGOALS)),)
-$(error Unsupported CHAIN - use ethereum, ropsten, goerli, moonriver, ethereum_classic, expanse, poa, artis_sigma1, artis_tau1, rsk, rsk_testnet, ubiq, wanchain, kusd, musicoin, pirl, akroma, atheios, callisto, ethersocial, ellaism, ether1, ethergem, gochain, mix, reosc, hpb, tomochain, tobalaba, dexon, volta, ewc, webchain, thundercore, bsc, songbird, polygon, cpchain)
+$(error Unsupported CHAIN - use cpchain)
 endif
 endif
 

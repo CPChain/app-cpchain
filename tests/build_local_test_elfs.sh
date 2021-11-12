@@ -5,7 +5,7 @@
 # NANOX_SDK=
 
 # list of apps required by tests that we want to build here
-appnames=("ethereum" "ethereum_classic")
+appnames=("cpchain" )
 
 # create elfs folder if it doesn't exist
 mkdir -p elfs

@@ -28,8 +28,11 @@ const Resolve = require('path').resolve;
 const NANOS_ELF_PATH = Resolve('elfs/cpchain_nanos.elf');
 const NANOX_ELF_PATH = Resolve('elfs/cpchain_nanox.elf');
 
-const NANOS_CPC_LIB = { "CPChain": NANOS_ELF_PATH };
-const NANOX_CPC_LIB = { "CPChain": NANOX_ELF_PATH };
+const NANOS_ETH_LIB = { "Ethereum": NANOS_ELF_PATH };
+const NANOX_ETH_LIB = { "Ethereum": NANOX_ELF_PATH };
+
+const NANOS_CLONE_ELF_PATH = Resolve("elfs/ethereum_classic_nanos.elf");
+const NANOX_CLONE_ELF_PATH = Resolve("elfs/ethereum_classic_nanox.elf");
 
 const TIMEOUT = 1000000;
 
@@ -48,11 +51,8 @@ function zemu(device, func) {
         }
         const sim = new Zemu(...zemu_args);
         try {
-            console.log('----->>>>>>0')
             await sim.start(sim_options);
-            console.log('----->>>>>>1')
             const transport = await sim.getTransport();
-            console.log('----->>>>>>2')
             await func(sim, new Eth(transport));
         } finally {
             await sim.close();
@@ -65,8 +65,10 @@ module.exports = {
     waitForAppScreen,
     NANOS_ELF_PATH,
     NANOX_ELF_PATH,
-    NANOS_CPC_LIB,
-    NANOX_CPC_LIB,
+    NANOS_ETH_LIB,
+    NANOX_ETH_LIB,
+    NANOS_CLONE_ELF_PATH,
+    NANOX_CLONE_ELF_PATH,
     sim_options_nanos,
     sim_options_nanox,
     TIMEOUT

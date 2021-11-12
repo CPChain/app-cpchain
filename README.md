@@ -19,15 +19,20 @@ Open `tests/build_local_test_elfs.sh` and add your BOLOS SDKs path to `NANOS_SDK
 This helper script will build the applications required by the test suite and move them at the right place.
 
 ```bash
-cd test
+
+cd tests
+
 ./build_local_test_elfs.sh
+
 ```
 
 Then you can install the project by simply running:
 
 ```bash
+
 cd ..
 make test
+
 ```
 
 This will run `make install_tests` and `make run_tests`

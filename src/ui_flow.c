@@ -51,14 +51,14 @@ UX_FLOW(ux_idle_flow,
 #if defined(TARGET_NANOS)
 
 // clang-format off
-UX_STEP_CB(
-    ux_settings_flow_1_step,
-    bnnn_paging,
-    switch_settings_blind_signing(),
-    {
-      .title = "Blind signing",
-      .text = strings.common.fullAddress,
-    });
+// UX_STEP_CB(
+//     ux_settings_flow_1_step,
+//     bnnn_paging,
+//     switch_settings_blind_signing(),
+//     {
+//       .title = "Blind signing",
+//       .text = strings.common.fullAddress,
+//     });
 
 UX_STEP_CB(
     ux_settings_flow_2_step,
@@ -80,16 +80,16 @@ UX_STEP_CB(
 
 #else
 
-UX_STEP_CB(
-    ux_settings_flow_1_step,
-    bnnn,
-    switch_settings_blind_signing(),
-    {
-      "Blind signing",
-      "Enable transaction",
-      "blind signing",
-      strings.common.fullAddress,
-    });
+// UX_STEP_CB(
+//     ux_settings_flow_1_step,
+//     bnnn,
+//     switch_settings_blind_signing(),
+//     {
+//       "Blind signing",
+//       "Enable transaction",
+//       "blind signing",
+//       strings.common.fullAddress,
+//     });
 
 UX_STEP_CB(
     ux_settings_flow_2_step,

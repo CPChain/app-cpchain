@@ -131,5 +131,5 @@ tx = Transaction(0, tx.nonce, tx.gasprice, tx.startgas,
 print("Signed transaction", encode_hex(encode(tx)))
 
 """
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_sendRawTransaction","params":["0xf87180808601a3185c5000830493e0941455d180e3ade94ebd9cc324d22a9065d1f5f575880de0b6b3a7640000808202c6a00757621af0367262d485359744cce305d62aeb876c7abac400415319c970afa0a04c4b4cf7ce0e470c900d292e59e5dd6dfeb74b9c6126b93bb987bbfd48955705"],"id":1}' --url 'https://civilian.cpchain.io' -H "Content-Type: application/json"
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_sendRawTransaction","params":["0xf87180058601a3185c5000830493e0941455d180e3ade94ebd9cc324d22a9065d1f5f575880de0b6b3a7640000808202c5a0083a86e303e51059d66447bdff2447b2660432f4b777fa13225f0cab214fa45ca026870dab72ad872a7058d2b9498d721f50b499164bedcbfeae3fee09ee4e833f"],"id":1}' --url 'https://civilian.cpchain.io' -H "Content-Type: application/json"
 """

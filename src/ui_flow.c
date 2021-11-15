@@ -143,9 +143,10 @@ void display_settings(const ux_flow_step_t* const start_step) {
 }
 
 void switch_settings_blind_signing() {
-    uint8_t value = (N_storage.dataAllowed ? 0 : 1);
-    nvm_write((void*) &N_storage.dataAllowed, (void*) &value, sizeof(uint8_t));
-    display_settings(&ux_settings_flow_1_step);
+    // close blind signing
+    // uint8_t value = (N_storage.dataAllowed ? 0 : 1);
+    // nvm_write((void*) &N_storage.dataAllowed, (void*) &value, sizeof(uint8_t));
+    // display_settings(&ux_settings_flow_1_step);
 }
 
 void switch_settings_display_data() {

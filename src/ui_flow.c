@@ -126,7 +126,7 @@ UX_STEP_CB(
 // clang-format on
 
 UX_FLOW(ux_settings_flow,
-        &ux_settings_flow_1_step,
+        // &ux_settings_flow_1_step, // close blind signing
         &ux_settings_flow_2_step,
         &ux_settings_flow_3_step,
         &ux_settings_flow_4_step);

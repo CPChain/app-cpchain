@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 *******************************************************************************
-*   Ledger Ethereum App
+*   Ledger CPChain App
 *   (c) 2016-2019 Ledger
 *
 *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,7 +28,6 @@ import binascii
 from ethBase import Transaction, UnsignedTransaction, unsigned_tx_from_tx
 from rlp import encode
 
-# Define here Chain_ID for EIP-155
 CHAIN_ID = 337
 
 try:
@@ -125,11 +124,13 @@ else:
 r = int(binascii.hexlify(result[1:1 + 32]), 16)
 s = int(binascii.hexlify(result[1 + 32: 1 + 32 + 32]), 16)
 
+print('r:', hex(r), 's:', hex(s))
+
 tx = Transaction(0, tx.nonce, tx.gasprice, tx.startgas,
                  tx.to, tx.value, tx.data, v, r, s)
 
 print("Signed transaction", encode_hex(encode(tx)))
 
 """
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_sendRawTransaction","params":["0xf87180058601a3185c5000830493e0941455d180e3ade94ebd9cc324d22a9065d1f5f575880de0b6b3a7640000808202c5a0083a86e303e51059d66447bdff2447b2660432f4b777fa13225f0cab214fa45ca026870dab72ad872a7058d2b9498d721f50b499164bedcbfeae3fee09ee4e833f"],"id":1}' --url 'https://civilian.cpchain.io' -H "Content-Type: application/json"
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_sendRawTransaction","params":["0xf86f80108529e8d60800825208941455d180e3ade94ebd9cc324d22a9065d1f5f575880de0b6b3a7640000808202c5a06df960fa5d29c6ced5cdd55d014fada84f4472735402c211899e3da23ef89e06a05975597b23d733703b3afe1855de19f572c12483a6319656e77a5b31df997988"],"id":1}' --url 'https://civilian.cpchain.io' -H "Content-Type: application/json"
 """

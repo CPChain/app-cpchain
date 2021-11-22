@@ -6,7 +6,15 @@ Ledger Blue is not maintained anymore, but the app can still be compiled for thi
 
 This app follows the specification available in the `doc/` folder.
 
-To compile it and load it on a device, please check out [developer portal](https://developers.ledger.com/docs/NA/start_here/).
+To compile it and load it on a device, please check out [developer portal](https://developers.ledger.com/docs/nano-app/build/#22-build-the-application).
+
+## Build
+
+```bash
+
+make ALLOW_DATA=1
+
+```
 
 ## Testing
 

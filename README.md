@@ -12,6 +12,7 @@ To compile it and load it on a device, please check out [developer portal](https
 
 ```bash
 
+# nanos
 make ALLOW_DATA=1
 
 make load

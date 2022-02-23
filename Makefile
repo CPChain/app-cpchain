@@ -242,6 +242,7 @@ else ifeq ($(CHAIN),cpchain)
 APP_LOAD_PARAMS += --path "44'/337'"
 DEFINES += CHAINID_UPCASE=\"CPCHAIN\" CHAINID_COINNAME=\"CPC\" CHAIN_KIND=CHAIN_KIND_CPCHAIN CHAIN_ID=337
 APPNAME = "CPChain"
+DEFINES_LIB =
 else
 ifeq ($(filter clean,$(MAKECMDGOALS)),)
 $(error Unsupported CHAIN - use ethereum, ropsten, goerli, moonriver, ethereum_classic, expanse, poa, artis_sigma1, artis_tau1, rsk, rsk_testnet, ubiq, wanchain, kusd, musicoin, pirl, akroma, atheios, callisto, ethersocial, ellaism, ether1, ethergem, gochain, mix, reosc, hpb, tomochain, tobalaba, dexon, volta, ewc, webchain, thundercore, bsc, songbird, polygon, shyft, cpchain)

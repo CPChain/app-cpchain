@@ -1,6 +1,5 @@
 import Zemu from '@zondax/zemu';
 import Eth from '@ledgerhq/hw-app-eth';
-import {RLP} from "ethers/lib/utils";
 
 const transactionUploadDelay = 60000;
 
@@ -26,45 +25,13 @@ const sim_options_nanox = {
 
 const Resolve = require('path').resolve;
 
-const NANOS_ELF_PATH = Resolve('elfs/ethereum_nanos.elf');
-const NANOX_ELF_PATH = Resolve('elfs/ethereum_nanox.elf');
+const NANOS_ELF_PATH = Resolve('elfs/cpchain_nanos.elf');
+const NANOX_ELF_PATH = Resolve('elfs/cpchain_nanox.elf');
 
-const NANOS_ETH_LIB = { "Ethereum": NANOS_ELF_PATH };
-const NANOX_ETH_LIB = { "Ethereum": NANOX_ELF_PATH };
-
-const NANOS_CLONE_ELF_PATH = Resolve("elfs/ethereum_classic_nanos.elf");
-const NANOX_CLONE_ELF_PATH = Resolve("elfs/ethereum_classic_nanox.elf");
+const NANOS_CPC_LIB = { "CPChain": NANOS_ELF_PATH };
+const NANOX_CPC_LIB = { "CPChain": NANOX_ELF_PATH };
 
 const TIMEOUT = 1000000;
-
-// Generates a serializedTransaction from a rawHexTransaction copy pasted from etherscan.
-function txFromEtherscan(rawTx) {
-    // Remove 0x prefix
-    rawTx = rawTx.slice(2);
-
-    let txType = rawTx.slice(0, 2);
-    if (txType == "02" || txType == "01") {
-        // Remove "02" prefix
-        rawTx = rawTx.slice(2);
-    } else {
-        txType = "";
-    }
-
-    let decoded = RLP.decode("0x" + rawTx);
-    if (txType != "") {
-        decoded = decoded.slice(0, decoded.length - 3); // remove v, r, s
-    } else {
-        decoded[decoded.length - 1] = "0x"; // empty
-        decoded[decoded.length - 2] = "0x"; // empty
-        decoded[decoded.length - 3] = "0x01"; // chainID 1
-    }
-
-    // Encode back the data, drop the '0x' prefix
-    let encoded = RLP.encode(decoded).slice(2);
-
-    // Don't forget to prepend the txtype
-    return txType + encoded;
-}
 
 function zemu(device, func) {
     return async () => {
@@ -95,12 +62,9 @@ module.exports = {
     waitForAppScreen,
     NANOS_ELF_PATH,
     NANOX_ELF_PATH,
-    NANOS_ETH_LIB,
-    NANOX_ETH_LIB,
-    NANOS_CLONE_ELF_PATH,
-    NANOX_CLONE_ELF_PATH,
+    NANOS_CPC_LIB,
+    NANOX_CPC_LIB,
     sim_options_nanos,
     sim_options_nanox,
-    TIMEOUT,
-    txFromEtherscan,
+    TIMEOUT
 }

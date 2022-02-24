@@ -7,7 +7,7 @@ TESTS_FULL_PATH=$(dirname "$(realpath "$0")")
 # NANOX_SDK=
 
 # list of apps required by tests that we want to build here
-APPS=("ethereum" "ethereum_classic")
+APPS=("cpchain")
 
 # list of SDKS
 NANO_SDKS=("$NANOS_SDK" "$NANOX_SDK")
